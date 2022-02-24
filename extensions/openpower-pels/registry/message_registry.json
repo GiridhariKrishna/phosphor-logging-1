@@ -445,8 +445,8 @@
 
             "Documentation":
             {
-                "Description": "Failure occured during boot process",
-                "Message": "Failure occured during boot process",
+                "Description": "Failure occurred during boot process",
+                "Message": "Failure occurred during boot process",
                 "Notes": [
                     "Debug traces will be captured in AdditionalData section"
                 ]
@@ -578,6 +578,32 @@
         },
 
         {
+            "Name": "org.open_power.PHAL.Error.NonFunctionalBootProc",
+            "Subsystem": "cec_hardware",
+            "ComponentID": "0x3000",
+            "Severity": "unrecoverable",
+
+            "SRC":
+            {
+                "ReasonCode": "0x3007",
+                "Words6To9":
+                {
+                }
+            },
+
+            "Documentation":
+            {
+                "Description": "Non functional boot processor",
+                "Message": "Non functional boot processor",
+                "Notes": [
+                    "BMC firmware couldn't find functional primary processor",
+                    "required to boot the host",
+                    "Debug traces will be captured in AdditionalData section"
+                ]
+            }
+        },
+
+        {
             "Name": "org.open_power.HardwareIsolation.Error",
             "Subsystem": "cec_hardware",
             "ComponentID": "0x3100",
@@ -592,8 +618,8 @@
 
             "Documentation":
             {
-                "Description": "Failure occured during hardware isolation operations",
-                "Message": "Failure occured during hardware isolation operations",
+                "Description": "Failure occurred during hardware isolation operations",
+                "Message": "Failure occurred during hardware isolation operations",
                 "Notes": [
                     "Severity needs to be set based on needs for this registry.",
                     "Debug traces will be captured in AdditionalData section"
@@ -622,6 +648,376 @@
                     "is most likely the result of the BMC rebooting while the ",
                     "host was booting and in a state where it still needed ",
                     "the BMC to complete its boot."
+                ]
+            }
+        },
+
+        {
+            "Name": "xyz.openbmc_project.State.ChassisPowerBad",
+            "Subsystem": "input_power_source",
+            "ComponentID": "0x3400",
+            "SRC":
+            {
+                "ReasonCode": "0x3402",
+                "Words6To9":
+                {
+                }
+            },
+            "Callouts": [
+                {
+                    "CalloutList": [{"Priority": "high", "Procedure": "next_level_support"}]
+                }
+            ],
+            "Documentation":
+            {
+                "Description": "Chassis input power is in a bad state",
+                "Message": "Chassis input power is in a bad state, look for other logs with more details",
+                "Notes": [
+                    "The system is most likely in a limited power situation. ",
+                    "There is enough power for the BMC to operate but not the ",
+                    "CEC hardware. Check for UPS or brownout logs."
+                ]
+            }
+        },
+
+        {
+            "Name": "xyz.openbmc_project.State.PinholeReset",
+            "Subsystem": "cec_op_panel",
+            "ComponentID": "0x3400",
+            "SRC":
+            {
+                "ReasonCode": "0x3403",
+                "Words6To9":
+                {
+                }
+            },
+            "Documentation":
+            {
+                "Description": "User initiated a pinhole reset via the op-panel",
+                "Message": "User initiated a pinhole reset via the op-panel",
+                "Notes": [
+                    "This is a notification log to record the fact that a ",
+                    "pinhole reset was performed on the BMC, resulting in a ",
+                    "hard reset of the BMC."
+                ]
+            }
+        },
+
+        {
+            "Name": "xyz.openbmc_project.State.Error.CriticalServiceFailure",
+            "Subsystem": "bmc_firmware",
+            "ComponentID": "0x3400",
+            "SRC":
+            {
+                "ReasonCode": "0x3404",
+                "Words6To9":
+                {
+                }
+            },
+            "Callouts": [
+                {
+                    "CalloutList": [{"Priority": "high", "Procedure": "next_level_support"}]
+                }
+            ],
+            "Documentation":
+            {
+                "Description": "A critical BMC application has failed on the system",
+                "Message": "A critical BMC application has failed on the system, the BMC is in an undefined state",
+                "Notes": [
+                    "As a part of generating this error log, a BMC dump has ",
+                    "also been generated. Please collect this dump if possible. ",
+                    "The BMC state is undefined but basic services could still ",
+                    "be available. Usually an AC cycle of the entire system is ",
+                    "the best recovery option from this error."
+                ]
+            }
+        },
+
+        {
+            "Name": "xyz.openbmc_project.State.Error.SecurityCheckFail",
+            "Subsystem": "bmc_firmware",
+            "ComponentID": "0x3400",
+            "SRC":
+            {
+                "ReasonCode": "0x3405",
+                "Words6To9":
+                {
+                }
+            },
+            "Callouts": [
+                {
+                    "CalloutList": [{"Priority": "high", "Procedure": "next_level_support"}]
+                }
+            ],
+            "Documentation":
+            {
+                "Description": "A firmware security check has failed",
+                "Message": "A firmware security check has failed, most likely something is not configured correctly",
+                "Notes": [
+                    "This log is only generated in the manufacturing ",
+                    "environment and it indicates that something has not ",
+                    "been configured correctly. Use the data in the PEL to ",
+                    "determine what that is."
+                ]
+            }
+        },
+
+        {
+            "Name": "xyz.openbmc_project.State.BMC.Error.MultiUserTargetFailure",
+            "Subsystem": "bmc_firmware",
+            "ComponentID": "0x3400",
+            "SRC":
+            {
+                "ReasonCode": "0x3406",
+                "Words6To9":
+                {
+                }
+            },
+            "Callouts": [
+                {
+                    "CalloutList": [{"Priority": "high", "Procedure": "next_level_support"}]
+                }
+            ],
+            "Documentation":
+            {
+                "Description": "The system has failed to reach BMC Ready state",
+                "Message": "The system has failed to reach BMC Ready state, look for other errors",
+                "Notes": [
+                    "This log indicates a critical BMC application required ",
+                    "for the BMC to reach Ready state has failed to start  ",
+                    "successfully. Look in the log for other errors indicating ",
+                    "what has failed."
+                ]
+            }
+        },
+
+        {
+            "Name": "xyz.openbmc_project.State.Chassis.Error.PowerOnFailure",
+            "Subsystem": "bmc_firmware",
+            "ComponentID": "0x3400",
+            "SRC":
+            {
+                "ReasonCode": "0x3407",
+                "Words6To9":
+                {
+                }
+            },
+            "Callouts": [
+                {
+                    "CalloutList": [{"Priority": "high", "Procedure": "next_level_support"}]
+                }
+            ],
+            "Documentation":
+            {
+                "Description": "The system has failed to reach chassis power on state",
+                "Message": "The system has failed to reach chassis power on state, look for other errors",
+                "Notes": [
+                    "This log indicates a critical BMC application required ",
+                    "for the BMC to power on the chassis has failed to start  ",
+                    "successfully. Look in the log for other errors indicating ",
+                    "what has failed."
+                ]
+            }
+        },
+
+        {
+            "Name": "xyz.openbmc_project.State.Chassis.Error.PowerOffFailure",
+            "Subsystem": "bmc_firmware",
+            "ComponentID": "0x3400",
+            "SRC":
+            {
+                "ReasonCode": "0x3408",
+                "Words6To9":
+                {
+                }
+            },
+            "Callouts": [
+                {
+                    "CalloutList": [{"Priority": "high", "Procedure": "next_level_support"}]
+                }
+            ],
+            "Documentation":
+            {
+                "Description": "The system has failed to reach chassis power off state",
+                "Message": "The system has failed to reach chassis power off state, look for other errors",
+                "Notes": [
+                    "This log indicates a critical BMC application required ",
+                    "for the BMC to power off the chassis has failed to start  ",
+                    "successfully. Look in the log for other errors indicating ",
+                    "what has failed."
+                ]
+            }
+        },
+
+        {
+            "Name": "xyz.openbmc_project.State.Host.Error.HostStartFailure",
+            "Subsystem": "bmc_firmware",
+            "ComponentID": "0x3400",
+            "SRC":
+            {
+                "ReasonCode": "0x3409",
+                "Words6To9":
+                {
+                }
+            },
+            "Callouts": [
+                {
+                    "CalloutList": [{"Priority": "high", "Procedure": "next_level_support"}]
+                }
+            ],
+            "Documentation":
+            {
+                "Description": "The system has failed to start the host firmware",
+                "Message": "The system has failed to start the host firmware, look for other errors",
+                "Notes": [
+                    "This log indicates a critical BMC application required ",
+                    "for the BMC to start the host has failed to start  ",
+                    "successfully. Look in the log for other errors indicating ",
+                    "what has failed."
+                ]
+            }
+        },
+
+        {
+            "Name": "xyz.openbmc_project.State.Host.Error.HostStartMinFailure",
+            "Subsystem": "bmc_firmware",
+            "ComponentID": "0x3400",
+            "SRC":
+            {
+                "ReasonCode": "0x3410",
+                "Words6To9":
+                {
+                }
+            },
+            "Callouts": [
+                {
+                    "CalloutList": [{"Priority": "high", "Procedure": "next_level_support"}]
+                }
+            ],
+            "Documentation":
+            {
+                "Description": "The system has failed to start the host firmware",
+                "Message": "The system has failed to start the host firmware, look for other errors",
+                "Notes": [
+                    "This log indicates a critical BMC application required ",
+                    "for the BMC to start the host has failed to start  ",
+                    "successfully. Look in the log for other errors indicating ",
+                    "what has failed."
+                ]
+            }
+        },
+
+        {
+            "Name": "xyz.openbmc_project.State.Host.Error.HostShutdownFailure",
+            "Subsystem": "bmc_firmware",
+            "ComponentID": "0x3400",
+            "SRC":
+            {
+                "ReasonCode": "0x3411",
+                "Words6To9":
+                {
+                }
+            },
+            "Callouts": [
+                {
+                    "CalloutList": [{"Priority": "high", "Procedure": "next_level_support"}]
+                }
+            ],
+            "Documentation":
+            {
+                "Description": "The system has failed to shutdown the host firmware",
+                "Message": "The system has failed to shutdown the host firmware, look for other errors",
+                "Notes": [
+                    "This log indicates a critical BMC application required ",
+                    "to shutdown the host firmware has failed to start  ",
+                    "successfully. Look in the log for other errors indicating ",
+                    "what has failed."
+                ]
+            }
+        },
+
+        {
+            "Name": "xyz.openbmc_project.State.Host.Error.HostStopFailure",
+            "Subsystem": "bmc_firmware",
+            "ComponentID": "0x3400",
+            "SRC":
+            {
+                "ReasonCode": "0x3412",
+                "Words6To9":
+                {
+                }
+            },
+            "Callouts": [
+                {
+                    "CalloutList": [{"Priority": "high", "Procedure": "next_level_support"}]
+                }
+            ],
+            "Documentation":
+            {
+                "Description": "The system has failed to stop the host firmware",
+                "Message": "The system has failed to stop the host firmware, look for other errors",
+                "Notes": [
+                    "This log indicates a critical BMC application required ",
+                    "to stop the host firmware has failed to start  ",
+                    "successfully. Look in the log for other errors indicating ",
+                    "what has failed."
+                ]
+            }
+        },
+
+        {
+            "Name": "xyz.openbmc_project.State.Host.Error.HostRebootFailure",
+            "Subsystem": "bmc_firmware",
+            "ComponentID": "0x3400",
+            "SRC":
+            {
+                "ReasonCode": "0x3413",
+                "Words6To9":
+                {
+                }
+            },
+            "Callouts": [
+                {
+                    "CalloutList": [{"Priority": "high", "Procedure": "next_level_support"}]
+                }
+            ],
+            "Documentation":
+            {
+                "Description": "The system has failed to reboot the host firmware",
+                "Message": "The system has failed to reboot the host firmware, look for other errors",
+                "Notes": [
+                    "This log indicates a critical BMC application required ",
+                    "to reboot the host firmware has failed to start  ",
+                    "successfully. Look in the log for other errors indicating ",
+                    "what has failed."
+                ]
+            }
+        },
+
+        {
+            "Name": "xyz.openbmc_project.State.Error.HostQuiesce",
+            "Subsystem": "bmc_firmware",
+            "ComponentID": "0x3400",
+            "SRC":
+            {
+                "ReasonCode": "0x3414",
+                "Words6To9":
+                {
+                }
+            },
+            "Callouts": [
+                {
+                    "CalloutList": [{"Priority": "high", "Procedure": "next_level_support"}]
+                }
+            ],
+            "Documentation":
+            {
+                "Description": "The host firmware has failed to boot",
+                "Message": "The host firmware has failed to boot and has entered a Quiesce state. Look for other errors.",
+                "Notes": [
+                    "This log indicates that the host firmware has failed to ",
+                    "boot and all retries have been exhausted. There should be  ",
+                    "other logs with more details on the boot failure reason. "
                 ]
             }
         },
@@ -853,7 +1249,12 @@
 
         {
             "Name": "org.open_power.HwDiags.Error.Checkstop",
-            "Subsystem": "cec_hardware",
+            "PossibleSubsystems": [
+                "processor", "processor_fru", "processor_unit", "processor_bus",
+                "memory_ctlr", "memory_bus", "memory_dimm", "memory_fru",
+                "phb", "cec_hardware", "cec_clocks", "cec_tod", "others"
+            ],
+            "Severity": "unrecoverable",
             "ActionFlags": [ "service_action", "report", "call_home" ],
 
             "SRC":
@@ -887,7 +1288,12 @@
 
         {
             "Name": "org.open_power.HwDiags.Error.Predictive",
-            "Subsystem": "cec_hardware",
+            "PossibleSubsystems": [
+                "processor", "processor_fru", "processor_unit", "processor_bus",
+                "memory_ctlr", "memory_bus", "memory_dimm", "memory_fru",
+                "phb", "cec_hardware", "cec_clocks", "cec_tod", "others"
+            ],
+            "Severity": "predictive",
             "ActionFlags": [ "service_action", "report", "call_home" ],
 
             "SRC":
@@ -921,7 +1327,12 @@
 
         {
             "Name": "org.open_power.HwDiags.Error.Informational",
-            "Subsystem": "cec_hardware",
+            "PossibleSubsystems": [
+                "processor", "processor_fru", "processor_unit", "processor_bus",
+                "memory_ctlr", "memory_bus", "memory_dimm", "memory_fru",
+                "phb", "cec_hardware", "cec_clocks", "cec_tod", "others"
+            ],
+            "Severity": "non_error",
             "ActionFlags": [ "hidden", "dont_report" ],
 
             "SRC":
@@ -956,7 +1367,6 @@
         {
             "Name": "xyz.openbmc_project.Power.PowerSupply.Error.InputFault",
             "Subsystem": "power_supply",
-            "Severity": "unrecoverable_redundancy_loss",
             "ActionFlags": ["service_action", "report"],
             "ComponentID": "0x2700",
 
@@ -994,7 +1404,6 @@
         {
             "Name": "xyz.openbmc_project.Power.PowerSupply.Error.Fault",
             "Subsystem": "power_supply",
-            "Severity": "unrecoverable_redundancy_loss",
             "ActionFlags": ["service_action", "report", "call_home"],
             "ComponentID": "0x2700",
 
@@ -1019,7 +1428,6 @@
         {
             "Name": "xyz.openbmc_project.Power.PowerSupply.Error.CommFault",
             "Subsystem": "power_supply",
-            "Severity": "unrecoverable",
             "ActionFlags": ["service_action", "report", "call_home"],
             "ComponentID": "0x2700",
 
@@ -1044,7 +1452,6 @@
         {
             "Name": "xyz.openbmc_project.Power.PowerSupply.Error.Missing",
             "Subsystem": "power_supply",
-            "Severity": "unrecoverable_redundancy_loss",
             "ActionFlags": ["service_action", "report", "call_home"],
             "ComponentID": "0x2700",
 
@@ -1081,7 +1488,6 @@
         {
             "Name": "xyz.openbmc_project.Power.PowerSupply.Error.NotSupported",
             "Subsystem": "power_supply",
-            "Severity": "unrecoverable",
             "ActionFlags": ["service_action", "report", "call_home"],
             "ComponentID": "0x2700",
 
@@ -1106,7 +1512,6 @@
         {
             "Name": "xyz.openbmc_project.Power.PowerSupply.Error.FanFault",
             "Subsystem": "power_supply",
-            "Severity": "unrecoverable",
             "ActionFlags": ["service_action", "report", "call_home"],
             "ComponentID": "0x2700",
 
@@ -1131,7 +1536,6 @@
         {
             "Name": "xyz.openbmc_project.Power.PowerSupply.Error.IoutOCFault",
             "Subsystem": "power_supply",
-            "Severity": "unrecoverable_redundancy_loss",
             "ActionFlags": ["service_action", "report", "call_home"],
             "ComponentID": "0x2700",
 
@@ -1159,15 +1563,13 @@
             "Name": "xyz.openbmc_project.State.Shutdown.Power.Error.Blackout",
             "Subsystem": "power",
             "ActionFlags": [ "report", "service_action" ],
-            "Severity": "unrecoverable",
             "ComponentID": "0x2700",
 
             "SRC":
             {
                 "Type": "11",
                 "ReasonCode": "0x00AC",
-                "Words6To9": {},
-                "PowerFault": true
+                "Words6To9": {}
             },
 
             "Callouts": [
@@ -1191,15 +1593,13 @@
         {
            "Name": "xyz.openbmc_project.Power.PowerSupply.Error.PSKillFault",
             "Subsystem": "power_supply",
-            "Severity": "unrecoverable",
             "ActionFlags": ["service_action", "report", "call_home"],
             "ComponentID": "0x2700",
 
             "SRC": {
                 "Type": "11",
                 "ReasonCode": "0x2500",
-                "Words6To9": {},
-                "PowerFault": true
+                "Words6To9": {}
             },
 
             "Callouts": [
@@ -1248,13 +1648,13 @@
         {
             "Name": "xyz.openbmc_project.State.Shutdown.Power.Error.Regulator",
             "Subsystem": "power_control_hw",
+            "Severity": "critical_system_term",
             "ComponentID": "0x2700",
 
             "SRC": {
                 "Type": "11",
                 "ReasonCode": "0x2602",
-                "Words6To9": {},
-                "PowerFault": true
+                "Words6To9": {}
             },
 
             "Callouts": [
@@ -1619,7 +2019,7 @@
                             {
                                 "CalloutList": [
                                     { "Priority": "high", "LocCode": "P0-C58" },
-                                    { "Priority": "medium", "LocCode": "P0-C60" },
+                                    { "Priority": "medium", "LocCode": "P0-C61" },
                                     { "Priority": "low", "LocCode": "P0" }
                                 ]
                             }
@@ -1630,7 +2030,7 @@
                             {
                                 "CalloutList": [
                                     { "Priority": "high", "LocCode": "P0-C16" },
-                                    { "Priority": "medium", "LocCode": "P0-C13" },
+                                    { "Priority": "medium", "LocCode": "P0-C14" },
                                     { "Priority": "low", "LocCode": "P0" }
                                 ]
                             }
@@ -1641,7 +2041,7 @@
                             {
                                 "CalloutList": [
                                     { "Priority": "high", "LocCode": "P0-C16" },
-                                    { "Priority": "medium", "LocCode": "P0-C20" },
+                                    { "Priority": "medium", "LocCode": "P0-C19" },
                                     { "Priority": "low", "LocCode": "P0" }
                                 ]
                             }
@@ -1659,11 +2059,12 @@
                         ]
                     },
                     {
-                        "ADValue": "0V_USB_front", "Callouts": [
+                        "ADValue": "5.0V_USB_front", "Callouts": [
                             {
                                 "CalloutList": [
                                     { "Priority": "high", "SymbolicFRU": "usb_pgood" },
-                                    { "Priority": "medium", "LocCode": "P0" }
+                                    { "Priority": "low", "LocCode": "P1" },
+                                    { "Priority": "low", "LocCode": "P0" }
                                 ]
                             }
                         ]
@@ -1673,7 +2074,7 @@
                             {
                                 "CalloutList": [
                                     { "Priority": "high", "LocCode": "P0-C63" },
-                                    { "Priority": "medium", "LocCode": "P0-C60" },
+                                    { "Priority": "medium", "LocCode": "P0-C61" },
                                     { "Priority": "low", "LocCode": "P0" }
                                 ]
                             }
@@ -1684,7 +2085,7 @@
                             {
                                 "CalloutList": [
                                     { "Priority": "high", "LocCode": "P0-C12" },
-                                    { "Priority": "medium", "LocCode": "P0-C13" },
+                                    { "Priority": "medium", "LocCode": "P0-C14" },
                                     { "Priority": "low", "LocCode": "P0" }
                                 ]
                             }
@@ -1695,7 +2096,7 @@
                             {
                                 "CalloutList": [
                                     { "Priority": "high", "LocCode": "P0-C21" },
-                                    { "Priority": "medium", "LocCode": "P0-C20" },
+                                    { "Priority": "medium", "LocCode": "P0-C19" },
                                     { "Priority": "low", "LocCode": "P0" }
                                 ]
                             }
@@ -1717,7 +2118,7 @@
                             {
                                 "CalloutList": [
                                     { "Priority": "high", "LocCode": "P0-C63" },
-                                    { "Priority": "medium", "LocCode": "P0-C60" },
+                                    { "Priority": "medium", "LocCode": "P0-C61" },
                                     { "Priority": "low", "LocCode": "P0" }
                                 ]
                             }
@@ -1728,7 +2129,7 @@
                             {
                                 "CalloutList": [
                                     { "Priority": "high", "LocCode": "P0-C12" },
-                                    { "Priority": "medium", "LocCode": "P0-C13" },
+                                    { "Priority": "medium", "LocCode": "P0-C14" },
                                     { "Priority": "low", "LocCode": "P0" }
                                 ]
                             }
@@ -1739,7 +2140,7 @@
                             {
                                 "CalloutList": [
                                     { "Priority": "high", "LocCode": "P0-C21" },
-                                    { "Priority": "medium", "LocCode": "P0-C20" },
+                                    { "Priority": "medium", "LocCode": "P0-C19" },
                                     { "Priority": "low", "LocCode": "P0" }
                                 ]
                             }
@@ -1869,7 +2270,11 @@
                         "ADValue": "3V3IO", "Callouts": [
                             {
                                 "CalloutList": [
-                                    { "Priority": "high", "LocCode": "P0-C17" }
+                                    { "Priority": "high", "LocCode": "P0-C17" },
+                                    { "Priority": "medium", "LocCode": "P0-C96" },
+                                    { "Priority": "medium", "LocCode": "P0-C0" },
+                                    { "Priority": "medium", "SymbolicFRU": "pcie_hot_plug" },
+                                    { "Priority": "low", "LocCode": "P0" }
                                 ]
                             }
                         ]
@@ -1941,8 +2346,8 @@
                             {
                                 "CalloutList": [
                                     { "Priority": "high", "LocCode": "P0-C58" },
-                                    { "Priority": "medium", "LocCode": "P0-C56" },
                                     { "Priority": "medium", "LocCode": "P0-C61" },
+                                    { "Priority": "medium", "LocCode": "P0-C56" },
                                     { "Priority": "low", "LocCode": "P0" }
                                 ]
                             }
@@ -2424,8 +2829,7 @@
             "SRC": {
                 "Type": "11",
                 "ReasonCode": "0xA014",
-                "Words6To9": {},
-                "PowerFault": true
+                "Words6To9": {}
             },
 
             "Callouts": [
@@ -2770,8 +3174,7 @@
             "SRC": {
                 "Type": "11",
                 "ReasonCode": "0x76F3",
-                "Words6To9": {},
-                "PowerFault": true
+                "Words6To9": {}
             },
 
             "Callouts": [
@@ -3253,35 +3656,6 @@
                 "Words6To9": {}
             },
 
-            "CalloutsUsingAD": {
-                "ADName": "SENSOR_NAME",
-                "CalloutsWithTheirADValues": [
-                    {
-                        "ADValue": "/xyz/openbmc_project/sensors/voltage/Battery_Voltage",
-                        "Callouts": [
-                            {
-                                "System": "ibm,rainier",
-                                "CalloutList": [
-                                    {
-                                        "Priority": "high",
-                                        "LocCode": "P0-E0"
-                                    }
-                                ]
-                            },
-                            {
-                                "System": "ibm,everest",
-                                "CalloutList": [
-                                    {
-                                        "Priority": "high",
-                                        "LocCode": "P0-C0-E0"
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            },
-
             "Documentation": {
                 "Description": "A voltage sensor went below its critical low threshold.",
                 "Message": "A voltage sensor went below its critical low threshold."
@@ -3412,7 +3786,7 @@
             },
 
             "Documentation": {
-                "Description": "A path access error ocurred",
+                "Description": "A path access error occurred",
                 "Message": "An EEPROM path access error occurred.",
                 "Notes": [
                     "This error occurs when parser is unable to access",
@@ -3587,6 +3961,156 @@
         },
 
         {
+            "Name": "com.ibm.VPD.Error.GPIOError",
+            "Subsystem": "cec_vpd",
+            "ComponentID": "0x4000",
+
+            "SRC": {
+                "ReasonCode": "0x4007",
+                "Words6To9":
+                {
+                }
+            },
+
+            "Documentation": {
+                "Description": "GPIO line error",
+                "Message": "GPIO line couldn't be found or read.",
+                "Notes": [
+                    "The BMC could not access a GPIO line. This generally means that the",
+                    " hardware had issues toggling the line and/or the device driver has",
+                    " not exposed the GPIO line to userspace due to underlying I2C issues.",
+                    " The I2C path will be called out."
+                ]
+            }
+        },
+
+        {
+            "Name": "com.ibm.VPD.Error.SystemVPDMismatch",
+            "Subsystem": "cec_vpd",
+            "ComponentID": "0x4000",
+
+            "SRC": {
+                "ReasonCode": "0x4008",
+                "Words6To9":
+                {
+                }
+            },
+
+            "Callouts": [
+                {
+                    "CalloutList": [
+                        { "Priority": "high", "Procedure": "bmc_code" }
+                    ]
+                }
+            ],
+
+            "Documentation": {
+                "Description": "System VPD restore failed",
+                "Message": "A system VPD restoration error occurred.",
+                "Notes": [
+                    "This error occurs when restoring of system VPD fails due to",
+                    "mismatch in cache data and hardware data.",
+                    "The record and keyword causing the failure is captured in",
+                    "additional data."
+                ]
+            }
+        },
+
+        {
+            "Name": "com.ibm.Panel.Error.InputDevPathFailure",
+            "Subsystem": "cec_op_panel",
+            "ComponentID": "0x5000",
+
+            "SRC": {
+                "ReasonCode": "0x5001",
+                "Words6To9": {}
+            },
+
+            "Documentation": {
+                "Description": "Button Handler Failure",
+                "Message": "Input Device path failure",
+                "Notes": [
+                    "Button events will not be processed."
+                ]
+            }
+        },
+
+        {
+            "Name": "com.ibm.Panel.Error.I2CSetupFailure",
+            "Subsystem": "cec_op_panel",
+            "ComponentID": "0x5000",
+
+            "SRC": {
+                "ReasonCode": "0x5002",
+                "Words6To9": {}
+            },
+
+            "Documentation": {
+                "Description": "Panel I2C setup failure",
+                "Message": "Unable to open device path or ioctl failure",
+                "Notes": [
+                    "The Panel is unable to open device",
+                    " path or ioctl failure"
+                ]
+            }
+        },
+
+        {
+            "Name": "com.ibm.Panel.Error.HostCommunicationError",
+            "Subsystem": "cec_op_panel",
+            "ComponentID": "0x5000",
+
+            "SRC": {
+                "ReasonCode": "0x5003",
+                "Words6To9": {}
+            },
+
+            "Callouts": [{
+                "CalloutList": [{
+                    "Priority": "high",
+                    "Procedure": "bmc_code"
+                }]
+            }],
+
+            "Documentation": {
+                "Description": "Host Communication failure",
+                "Message": "Error in sending message to host",
+                "Notes": [
+                    "Failure from PLDM sending message to",
+                    "Host"
+                ]
+            }
+        },
+
+        {
+            "Name": "com.ibm.Panel.Error.DbusError",
+            "Subsystem": "cec_op_panel",
+            "ComponentID": "0x5000",
+
+            "SRC": {
+                "ReasonCode": "0x5004",
+                "Words6To9": {}
+            },
+
+            "Callouts": [{
+                "CalloutList": [{
+                    "Priority": "high",
+                    "Procedure": "bmc_code"
+                }]
+            }],
+
+            "Documentation": {
+                "Description": "Dbus exception",
+                "Message": "A Dbus internal error occurred.",
+                "Notes": [
+                    "This error occurs when Dbus operation fails.",
+                    "Exceptions details are captured in additional",
+                    "data."
+                ]
+            }
+        },
+
+        {
             "Name": "org.open_power.Host.Boot.Error.WatchdogTimeout",
             "Subsystem": "cec_sp_hostboot_iface",
 
@@ -3712,8 +4236,8 @@
 
             "Documentation":
             {
-                "Description": "An error when reading the Manifest file..",
-                "Message": "An error when reading the Manifest file.."
+                "Description": "An error occurred when reading the software image Manifest file.",
+                "Message": "An error occurred when reading the software image Manifest file."
             }
         },
 
@@ -3795,6 +4319,60 @@
             {
                 "Description": "The device is busy during the update.",
                 "Message": "The device is busy during the update."
+            }
+        },
+
+        {
+            "Name": "xyz.openbmc_project.Software.Version.Error.ExpiredAccessKey",
+            "Subsystem": "bmc_firmware",
+            "ComponentID": "0x3600",
+            "SRC":
+            {
+                "ReasonCode": "0x3608",
+                "Words6To9":
+                {
+                }
+            },
+
+            "Callouts": [
+                {
+                    "CalloutList": [
+                        { "Priority": "high", "Procedure": "bmc_code" }
+                    ]
+                }
+            ],
+
+            "Documentation":
+            {
+                "Description": "The Update Access Key has expired.",
+                "Message": "The Update Access Key has expired."
+            }
+        },
+
+        {
+            "Name": "xyz.openbmc_project.Software.Version.Error.InvalidSignature",
+            "Subsystem": "bmc_firmware",
+            "ComponentID": "0x3600",
+            "SRC":
+            {
+                "ReasonCode": "0x3609",
+                "Words6To9":
+                {
+                }
+            },
+
+            "Callouts": [
+                {
+                    "CalloutList": [
+                        { "Priority": "high", "Procedure": "bmc_code" }
+                    ]
+                }
+            ],
+
+            "Documentation":
+            {
+                "Description": "The software image has an invalid signature.",
+                "Message": "The software image has an invalid signature"
             }
         }
 
